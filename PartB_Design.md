@@ -15,6 +15,12 @@
 - What trade-offs did you consider for storage efficiency?
 
 [Write your response here]
+ I´d use mapping when I want fast, direct lookups like “is this worker registered?” or “has this address applied already?” It’s clean and cheap for that kind of question. I use an array when I need an ordered list or I need to pick a random entry from a pool.
+
+For SkillsMarketplace, I’d keep workers in a mapping (address -> skill + status) and gigs in an array so each gig gets an ID. Then per‑gig maps help me block duplicates. For SecureLottery, I’d keep an array of entries so multiple entries per person are real, and a mapping to track unique players and their counts.
+
+Storage-wise I’m trying to keep it minimal: arrays grow fast, strings cost more, so I only store what the contract truly needs. Anything else I’d rather emit in events and let the frontend index it.
+   
 
 ---
 
@@ -27,6 +33,13 @@
 
 [Write your response here]
 
+Reentrancy: I make sure the state is updated before sending ETH (Checks‑Effects‑Interactions) and I’d add a simple reentrancy guard if needed.
+
+Access control: owner‑only for admin actions (pause/unpause, select winner) and only the gig poster can approve payments.
+
+Overflow: Solidity ^0.8.x already protects me, but I still validate inputs.
+
+Randomness: I don’t trust just block.timestamp. I mix multiple block values + contract state and enforce time + unique player thresholds. It’s still best effort on chain randomness unless I plug in an oracle (Chainlink VRF)
 ---
 
 ### 3. Trade-offs & Future Improvements
