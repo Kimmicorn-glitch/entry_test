@@ -1,6 +1,6 @@
 # Part A: MCQ Answers
 
-**Status:** [In Progress / Submitted]  
+**Status:** In Progress  
 
 ---
 
@@ -29,10 +29,10 @@
 - **C)** Use ERC-721 exclusively, store all data off-chain for gas savings, and require buyers to use MetaMask with manual price negotiations.  
 - **D)** Build everything as separate NFT collections with no DEX integration since farmers won't understand DeFi protocols.  
 
-**Your Answer:** [A/B/C/D]  
+**Your Answer:** B  
 
 **Your Reasoning:**  
-[2–3 sentences explaining why you chose this answer. What makes it the best choice?]  
+I’m still learning, but B feels right because it keeps things on‑chain and simple. ERC‑1155 lets farmers list a bunch of similar items at once (cheaper and easier), and reputation stays visible and not controlled by a middleman. Using a DEX means farmers can get paid directly without a central company holding funds.  
 
 ---
 
@@ -53,15 +53,17 @@ A farmer wants to list 50 bags of maize. Gas costs are:
 - **C)** They cost exactly the same  
 - **D)** ERC-1155 is cheaper by approximately $54  
 
-**Your Answer:** [A/B/C/D]  
+**Your Answer:** D (closest option, my math gives about $276 cheaper)  
 
 **Your Calculation/Reasoning:**  
-- ERC-721 cost = [Show calculation]
-- ERC-1155 cost = [Show calculation]
-- Difference = [Show calculation]
+- ERC-721 cost = 50 × 100,000 = 5,000,000 gas  
+  5,000,000 × 20 gwei = 100,000,000 gwei = 0.1 ETH = $300  
+- ERC-1155 cost = 150,000 + (49 × 5,000) = 395,000 gas  
+  395,000 × 20 gwei = 7,900,000 gwei = 0.0079 ETH = $23.70  
+- Difference = 0.1 − 0.0079 = 0.0921 ETH = $276.30  
 
 
-[Explain why gas optimisation matters for African users]  
+Gas optimisation matters because a lot of users can’t afford high fees. If fees are too high, people just won’t use it. Cheaper transactions help farmers list more without losing money to gas.  
 
 ---
 
@@ -76,10 +78,10 @@ A farmer asks: *"Why can't we just use a normal website with a database?"*
 - **C)** "Because smart contracts are more secure than databases and Web3 is decentralised."  
 - **D)** "Blockchain uses cryptography which makes it unhackable, unlike normal databases."  
 
-**Your Answer:** [A/B/C/D]  
+**Your Answer:** B  
 
 **Your Explanation:**  
-[2–3 sentences explaining what makes this answer correct. What did you learn about why blockchain matters in Africa?]  
+B is the only one that explains real benefits, not just “blockchain is cool.” It says no middleman can mess with payments, and reputation belongs to the farmer. In places where trust is hard and disputes are common, that’s actually useful.  
 
 ---
 
@@ -103,7 +105,7 @@ A farmer asks: *"Why can't we just use a normal website with a database?"*
 - **C)** The liquidity provider experiences impermanent loss because the pool maintains a constant product rather than constant ratio. ERC-721 would be more suitable than ERC-1155 for the NFT marketplace since individual NFTs require unique transactions.  
 - **D)** The constant product formula prevents any impermanent loss by automatically rebalancing. DAOs cannot implement financial protections due to smart contract immutability. ERC-1155 tokens are incompatible with standard DEX protocols.  
 
-**Your Answer:** [A/B/C/D]  
+**Your Answer:** B  
 
 **Your Reasoning:**  
 
@@ -111,7 +113,8 @@ A farmer asks: *"Why can't we just use a normal website with a database?"*
 - **DeFi Governance:** What is impermanent loss and how does protection work?  
 - **Token Standards:** Why might ERC-1155 be preferred over ERC-721 for marketplace integration?  
 
-[2–3 sentences synthesising these concepts into a coherent explanation]  
+the math is: k = 10 × 20,000 = 200,000.
+After adding 2 ETH (12 ETH total), y = 200,000 / 12 = 16,666.67 USDC, so the trader gets about 3,333 USDC. Impermanent loss protection helps LPs when prices move outside the pool. ERC‑1155 is better for a marketplace because it can batch transfers and is cheaper for lots of items.  
 
 ---
 
@@ -125,4 +128,4 @@ A farmer asks: *"Why can't we just use a normal website with a database?"*
 
 ---
 
-**Challenges faced:** [What was difficult? Which concepts are you less confident about?]  
+**Challenges faced:** The gas options don’t match my calculation, so I picked the closest and explained it. I’m still getting comfortable with impermanent loss and how randomness should be done safely.  
