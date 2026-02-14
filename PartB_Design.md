@@ -15,9 +15,11 @@
 - What trade-offs did you consider for storage efficiency?
 
 [Write your response here]
- I´d use mapping when I want fast, direct lookups like “is this worker registered?” or “has this address applied already?” It’s clean and cheap for that kind of question. I use an array when I need an ordered list or I need to pick a random entry from a pool.
+I´d use mapping when I want fast, direct lookups like “is this worker registered?” or “has this address applied already?” It’s clean and cheap for that kind of question. I use an array when I need an ordered list or I need to pick a random entry from a pool.
 
-For SkillsMarketplace, I’d keep workers in a mapping (address -> skill + status) and gigs in an array so each gig gets an ID. Then per‑gig maps help me block duplicates. For SecureLottery, I’d keep an array of entries so multiple entries per person are real, and a mapping to track unique players and their counts.
+For SkillsMarketplace, I’d keep workers in a mapping (address -> skill and status) and gigs in an array so each gig gets an ID. Then per gig maps help me block duplicates. 
+
+For SecureLottery, I’d keep an array of entries so multiple entries per person are real, and a mapping to track unique players and their counts.
 
 Storage-wise I’m trying to keep it minimal: arrays grow fast, strings cost more, so I only store what the contract truly needs. Anything else I’d rather emit in events and let the frontend index it.
    
@@ -49,6 +51,9 @@ Randomness: I don’t trust just block.timestamp. I mix multiple block values + 
 - Better error handling?
 
 [Write your response here]
+If I had more time I’d optimize gas by packing structs, cutting down on string storage, and replacing some arrays with events with off‑chain indexing.  
+Feature‑wise: dispute resolution for gigs, deadlines with auto‑release, and multiple prize tiers and refunds for the lottery.  
+I’d also swap revert strings for custom errors and tighten state transitions even more.
 
 ---
 
@@ -61,6 +66,8 @@ Randomness: I don’t trust just block.timestamp. I mix multiple block values + 
 - Any specific optimization strategies you implemented?
 
 [Write your response here]
+postGig is a normal storage write and event, so it’s not too bad but long strings make it pricier. selectWinner can get heavy if entries are massive because of array size.  
+In high‑fee environments this is better on L2s. I’d optimize by minimizing storage writes, using events for big data, and caching counts rather than recomputing.
 
 ---
 
@@ -71,6 +78,9 @@ Randomness: I don’t trust just block.timestamp. I mix multiple block values + 
 - Potential bottlenecks in `selectWinner` or `applyForGig`.
 
 [Write your response here]
+With 10,000+ entries, loops get expensive fast. That’s why selectWinner should pick directly from the entries array without looping across unique players.  
+Storage grows linearly, so I’d avoid keeping huge arrays unless absolutely needed. For marketplace applications, I’d lean on events + off‑chain indexing.  
+The main bottlenecks are selectWinner (if it loops) and any function that scans large arrays.
 
 ---
 
@@ -82,6 +92,9 @@ Randomness: I don’t trust just block.timestamp. I mix multiple block values + 
 - Mobile accessibility?
 
 [Write about your UX(user experience) considerations]
+I’d make onboarding feel normal: social login with embedded wallets, gas sponsorship, and a simple fiat on‑ramp.  
+For mobile, I’d use deep links and QR wallet connect, and keep the UI clean with clear status steps.  
+Non‑crypto users should never wonder “did my money vanish?” so I’d show gig state, deadlines, and simple confirmations.
 
 ---
 
@@ -95,6 +108,11 @@ Randomness: I don’t trust just block.timestamp. I mix multiple block values + 
 - Community resources
 
 [List 3-5 resources you used]
+- Solidity documentation
+- OpenZeppelin Contracts docs
+- Hardhat documentation
+- ConsenSys / SWC security references
+- Chainlink VRF docs (randomness ideas)
 
 ---
 
@@ -106,6 +124,7 @@ Randomness: I don’t trust just block.timestamp. I mix multiple block values + 
 - What you learned
 
 [Write down your challenges]
+Biggest challenge was randomness. Pure on‑chain randomness is never perfect, so I learned to be honest about trade‑offs and use stronger patterns (mixed entropy with time and player minimums) or go oracle based when it matters.
 
 ---
 
@@ -117,5 +136,6 @@ Randomness: I don’t trust just block.timestamp. I mix multiple block values + 
 - Frontend integration
 
 [Write your future learning goals]
+I want to go deeper on advanced patterns (upgradeable contracts, access control,not to forget soveriegnty), proper fuzz testing (Foundry), and real frontend integration with account abstraction.
 
 ---
